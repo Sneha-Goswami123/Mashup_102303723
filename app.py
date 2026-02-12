@@ -1,6 +1,7 @@
 from flask import Flask, request
 import zipfile
 import yagmail
+import os
 from mashup import run_mashup
 
 app = Flask(__name__)
@@ -21,7 +22,11 @@ def home():
         with zipfile.ZipFile(zip_name, 'w') as zipf:
             zipf.write(output_file)
 
-        yag = yagmail.SMTP("sg2549070@gmail.com", "wtkimkbsusiceepo")
+        yag = yagmail.SMTP(
+            os.environ.get("email_user"),
+            os.environ.get("email_pass")
+        )
+
         yag.send(email, "Mashup File", "Here is your mashup.", zip_name)
 
         return "Mashup sent successfully!"
@@ -37,9 +42,5 @@ def home():
     '''
 
 if __name__ == "__main__":
-    import os
-
-if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
-
