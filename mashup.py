@@ -1,6 +1,5 @@
 import os
 import yt_dlp
-from pydub import AudioSegment
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
 def run_mashup(singer, num_videos, duration, output_file):
